@@ -103,8 +103,6 @@ function convert(data, args = {}, to_file = '') {
     
     if (typeof data == "string") arguments = [data];
     
-    console.log(to_file !== '');
-    
     for (const p in args) {
         if (p.toLowerCase() === 'format') {
             format = args[p] ? args[p].toLowerCase() : format;
