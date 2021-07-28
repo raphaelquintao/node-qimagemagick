@@ -16,7 +16,7 @@ let image2 = './example-images/coffee.png';
     
     let blob = await qim.convert(image2, {
         resize: '50%',
-    }, './example-images/ok.jpg')
+    }, './example-images/coffee.jpg')
         .catch(reason => {
             console.log('error: ', reason);
             process.exit(1);
@@ -27,6 +27,6 @@ let image2 = './example-images/coffee.png';
 ```
 Output
 ```text
-Info { width: '1909', height: '1066', format: 'png' }
-Info { width: '955', height: '533', format: 'jpeg' }
+Info { width: '1909', height: '1066', format: 'png', size: '1.8288M' }
+Info { width: '955', height: '533', format: 'jpeg', size: '181.8047K' }
 ```

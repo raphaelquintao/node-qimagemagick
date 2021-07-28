@@ -1,7 +1,7 @@
 {
   "name": "qimagemagick",
   "description": "A wrapper for the ImageMagick CLI",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "QImageMagick.js",
   "repository": {
     "type": "git",

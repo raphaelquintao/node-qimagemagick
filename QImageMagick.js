@@ -4,10 +4,17 @@ const fs = require('fs');
 // console.log('TEST');
 
 class Info {
-    constructor(width, height, format) {
+    constructor(width, height, format, bytes) {
         this.width = width;
         this.height = height;
         this.format = format;
+        this.size = this.human_filesize(bytes);
+    }
+    
+    human_filesize(bytes) {
+        let hsz = ['B', 'K', 'M', 'G', 'T', 'P'];
+        let factor = Math.floor((String(bytes).length - 1) / 3);
+        return (bytes / Math.pow(1024, factor)).toFixed(4) + hsz[factor];
     }
     
     toString() {
@@ -81,8 +88,9 @@ function identify(data) {
             .then(value => {
                 let parts = value.split(' ');
                 let format = parts[1];
-                let size = parts[2].split('x');
-                resolve(new Info(size[0], size[1], format.toLowerCase()));
+                let geometry = parts[2].split('x');
+                let file_size = (data instanceof Buffer) ? data.length : fs.statSync(data).size;
+                resolve(new Info(geometry[0], geometry[1], format.toLowerCase(), file_size));
             }).catch(reason => {
             reject(reason);
         });
