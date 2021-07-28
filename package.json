@@ -1,0 +1,13 @@
+{
+  "name": "qimagemagick",
+  "description": "A wrapper for the ImageMagick CLI",
+  "author": "Raphael Quintão <https://github.com/raphaelquintao>",
+  "license": "MIT",
+  "version": "0.1.1",
+  "main": "QImageMagick.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raphaelquintao/node-qimagemagick.git"
+  },
+  "keywords": []
+}
