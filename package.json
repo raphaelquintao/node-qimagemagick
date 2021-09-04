@@ -1,8 +1,9 @@
 {
   "name": "qimagemagick",
   "description": "A wrapper for the ImageMagick CLI",
-  "version": "0.1.4",
-  "main": "QImageMagick.js",
+  "version": "0.1.9",
+  "main": "./src/QImageMagick.js",
+  "module": "./src/QImageMagick.mjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/raphaelquintao/node-qimagemagick.git"

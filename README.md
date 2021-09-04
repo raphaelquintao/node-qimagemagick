@@ -7,22 +7,30 @@ You can install this module using npm
 
 ## Example
 ```javascript
-let image1 = await qim.read_to_buffer('./example-images/coffee.png');
-let image2 = './example-images/coffee.png';
+import qim from "qimagemagick";
+// const qim = require("qimagemagick");
 
-    let info1 = await qim.identify(image1);
+async function main() {
+    let image1 = await qim.read_to_buffer('./example-images/coffee.png');
+    let image2 = './example-images/coffee.png';
+    
+    let info1 = await qim.identify(image2).then(value => value);
     console.log(info1);
     
-    let blob = await qim.convert(image2, {
+    let blob = await qim.convert(image1, {
         resize: '50%',
-    }, './example-images/coffee.jpg')
-        .catch(reason => {
-            console.log('error: ', reason);
-            process.exit(1);
-        });
+    }, './example-images/ok.jpg').then(value => {
+        return value;
+    }).catch(reason => {
+        console.log('error: ', reason);
+        process.exit(1);
+    });
     
     let info2 = await qim.identify(blob);
     console.log(info2);
+}
+
+main();
 ```
 Output
 ```text

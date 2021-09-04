@@ -1,7 +1,5 @@
-const {spawn} = require('child_process');
-const fs = require('fs');
-
-// console.log('TEST');
+const {spawn} = require("child_process");
+const fs = require("fs");
 
 class Info {
     constructor(width, height, format, bytes) {
@@ -30,7 +28,7 @@ class Info {
 function read_to_buffer(path) {
     return new Promise((resolve, reject) => {
         fs.readFile(path, ((err, data) => {
-            if(err) reject(err);
+            if (err) reject(err);
             resolve(Buffer.from(data, 'binary'));
         }));
         
@@ -67,14 +65,14 @@ function _exec(cmd, args = [], src, output_encoding = 'utf8') {
                 resolve(out);
             });
         } catch (e) {
-            // reject(e)
+            reject(e)
         }
         if (src instanceof Buffer) child.stdin.end(src);
     });
 }
 
 /**
- *
+ * Identify an image
  * @param data
  * @return {Promise<Info>}
  */
@@ -107,27 +105,27 @@ function identify(data) {
  */
 function convert(data, args = {}, to_file = '') {
     let format = 'png';
-    let arguments = ['-'];
+    let _arguments = ['-'];
     
-    if (typeof data == "string") arguments = [data];
+    if (typeof data == "string") _arguments = [data];
     
     for (const p in args) {
         if (p.toLowerCase() === 'format') {
             format = args[p] ? args[p].toLowerCase() : format;
         } else {
             if (args[p]) {
-                arguments.push(`-${p}`);
-                arguments.push(args[p]);
+                _arguments.push(`-${p}`);
+                _arguments.push(args[p]);
             }
         }
     }
     
-    if (to_file === '') arguments.push(`${format}:-`);
-    else arguments.push(to_file);
+    if (to_file === '') _arguments.push(`${format}:-`);
+    else _arguments.push(to_file);
     
     
     return new Promise((resolve, reject) => {
-        _exec('convert', arguments, data, 'binary')
+        _exec('convert', _arguments, data, 'binary')
             .then(async value => {
                 let buffer = null;
                 if (to_file === '') {
@@ -143,4 +141,6 @@ function convert(data, args = {}, to_file = '') {
     });
 }
 
-module.exports = {identify, convert, read_to_buffer};
+let qim = {identify, convert, read_to_buffer};
+
+module.exports = qim;
