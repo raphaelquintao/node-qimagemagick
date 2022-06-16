@@ -1,5 +1,9 @@
 .idea
-/test/
-/example-images/
-example.js
+.vscode
+
+node_modules
+example-images
+
 package-lock.json
+
+/test.ts

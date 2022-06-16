@@ -4,36 +4,55 @@ You can install this module using npm
 
 `npm install qimagemagick`
 
+## Requirements
+- ImageMagick CLI:
+  * Debian/Ubuntu/Linux Mint: `sudo apt-get install imagemagick`
+
 
 ## Example
+
 ```javascript
-import qim from "qimagemagick";
-// const qim = require("qimagemagick");
+import { QIM } from "qimagemagick";
+// const { QIM } = require("qimagemagick");
 
 async function main() {
-    let image1 = await qim.read_to_buffer('./example-images/coffee.png');
-    let image2 = './example-images/coffee.png';
+    let image = await QIM.read_to_buffer('./example-images/coffee.png');
     
-    let info1 = await qim.identify(image2).then(value => value);
-    console.log(info1);
+    let info = await QIM.identify(image).then(value => value);
+    console.log(info);
     
-    let blob = await qim.convert(image1, {
-        resize: '50%',
-    }, './example-images/ok.jpg').then(value => {
+    let blob = await QIM.convert(image, {
+        format: 'jpg',
+        resize: '50%'
+    }).then(value => {
         return value;
     }).catch(reason => {
         console.log('error: ', reason);
         process.exit(1);
     });
     
-    let info2 = await qim.identify(blob);
-    console.log(info2);
+    let converted_info = await QIM.identify(blob);
+    console.log(converted_info);
 }
 
 main();
 ```
-Output
-```text
-Info { width: '1909', height: '1066', format: 'png', size: '1.8288M' }
-Info { width: '955', height: '533', format: 'jpeg', size: '181.8047K' }
+#### Output
+``` text
+Info {
+  width: 1909,
+  height: 1066,
+  format: 'PNG',
+  depth: '8-bit',
+  colorspace: 'sRGB',
+  size: '1.8288MiB'
+}
+Info {
+  width: 955,
+  height: 533,
+  format: 'JPEG',
+  depth: '8-bit',
+  colorspace: 'sRGB',
+  size: '181.8047KiB'
+}
 ```
