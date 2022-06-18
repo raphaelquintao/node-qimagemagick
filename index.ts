@@ -1,3 +1,2 @@
 export * from './src/QImageMagick';
 
-
