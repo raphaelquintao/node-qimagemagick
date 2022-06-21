@@ -17,7 +17,7 @@ import { QIM } from "qimagemagick";
 // const { QIM } = require("qimagemagick");
 
 async function main() {
-    let image = await QIM.read_to_buffer('https://placedog.net/640/480');
+    let image = await QIM.read_to_buffer('./example-images/coffee.png');
     
     let info = await QIM.identify(image).catch(reason => {console.log(reason)});
     console.log(info);
@@ -117,6 +117,13 @@ Info {
   let buffer = await QIM.read_to_buffer('https://placedog.net/640/480');
   let info = await QIM.identify(buffer);
   ```
+
+## More Examples
+
+* [Runkit - Polaroid](https://runkit.com/raphaelquintao/qimagemagick-polaroid)
+
+* [Runkit - Annotate](https://runkit.com/raphaelquintao/qimagemagick-annotate)
+
 
 ## Full Documentation
 To see the full documentation visit: [ImageMagick – Command-line Processing](https://imagemagick.org/script/command-line-processing.php)

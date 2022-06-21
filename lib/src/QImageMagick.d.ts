@@ -1,15 +1,21 @@
 /// <reference types="node" />
+export declare class Annotate {
+    geometry: string;
+    text: string;
+    constructor(text: string, geometry?: string);
+    to_array(): string[];
+}
 export interface ConvertOptions {
-    /** adaptively blur pixels; decrease effect near edges
+    /** Adaptively blur pixels; decrease effect near edges
      * {@link http://www.imagemagick.org/script/command-line-options.php#adaptive-blur} */
     'adaptive-blur'?: string;
-    /** adaptively resize image with data dependent triangulation.
+    /** Adaptively resize image with data dependent triangulation.
      * {@link http://www.imagemagick.org/script/command-line-options.php#adaptive-resize} */
     'adaptive-resize'?: string;
-    /** adaptively sharpen pixels; increase effect near edges
+    /** Adaptively sharpen pixels; increase effect near edges
      * {@link http://www.imagemagick.org/script/command-line-options.php#adaptive-sharpen} */
     'adaptive-sharpen'?: string;
-    /** join images into a single multi-image file
+    /** Join images into a single multi-image file
      * {@link http://www.imagemagick.org/script/command-line-options.php#adjoin} */
     'adjoin'?: string;
     /** affine transform matrix
@@ -18,22 +24,22 @@ export interface ConvertOptions {
     /** on, activate, off, deactivate, set, opaque, copy", transparent, extract, background, or shape the alpha channel
      * {@link http://www.imagemagick.org/script/command-line-options.php#alpha} */
     'alpha'?: string;
-    /** geometry text     annotate the image with text
+    /** Annotate the image with text
      * {@link http://www.imagemagick.org/script/command-line-options.php#annotate} */
-    'annotate'?: string;
-    /** remove pixel-aliasing
+    'annotate'?: Annotate;
+    /** Remove pixel-aliasing
      * {@link http://www.imagemagick.org/script/command-line-options.php#antialias} */
     'antialias'?: string;
-    /** append an image sequence
+    /** Append an image sequence
      * {@link http://www.imagemagick.org/script/command-line-options.php#append} */
     'append'?: string;
     /** value     decipher image with this password
      * {@link http://www.imagemagick.org/script/command-line-options.php#authenticate} */
     'authenticate'?: string;
-    /** automagically adjust gamma level of image
+    /** Automagically adjust gamma level of image
      * {@link http://www.imagemagick.org/script/command-line-options.php#auto-gamma} */
     'auto-gamma'?: string;
-    /** automagically adjust color levels of image
+    /** Automagically adjust color levels of image
      * {@link http://www.imagemagick.org/script/command-line-options.php#auto-level} */
     'auto-level'?: string;
     /** automagically orient image
@@ -470,7 +476,7 @@ export interface ConvertOptions {
     'ping'?: string;
     /** value    font point size
      * {@link http://www.imagemagick.org/script/command-line-options.php#pointsize} */
-    'pointsize'?: string;
+    'pointsize'?: string | number;
     /** angle     simulate a Polaroid picture
      * {@link http://www.imagemagick.org/script/command-line-options.php#polaroid} */
     'polaroid'?: string;
@@ -632,7 +638,7 @@ export interface ConvertOptions {
     'stroke'?: string;
     /** value  graphic primitive stroke width
      * {@link http://www.imagemagick.org/script/command-line-options.php#strokewidth} */
-    'strokewidth'?: string;
+    'strokewidth'?: string | number;
     /** type   render text with this font stretch
      * {@link http://www.imagemagick.org/script/command-line-options.php#stretch} */
     'stretch'?: string;
@@ -714,7 +720,7 @@ export interface ConvertOptions {
     /** FlashPix viewing transforms
      * {@link http://www.imagemagick.org/script/command-line-options.php#view} */
     'view'?: string;
-    /** geometry  soften the edges of the image in vignette style
+    /** [geometry]  soften the edges of the image in vignette style
      * {@link http://www.imagemagick.org/script/command-line-options.php#vignette} */
     'vignette'?: string;
     /** method   access method for pixels outside the boundaries of the image

@@ -1,14 +1,14 @@
 {
   "name": "qimagemagick",
   "description": "A wrapper for the ImageMagick CLI",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "module": "lib/esm/index.js",
   "type": "commonjs",
   "scripts": {
     "build": "tsc && tsc -p tsconfig-esm.json",
-    "test": "npm run build && node example.js",
+    "test": "npm run build && node examples/basic.js",
     "prepublishOnly": "npm run build"
   },
   "repository": {

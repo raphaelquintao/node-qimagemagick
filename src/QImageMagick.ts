@@ -2,17 +2,32 @@ import { spawn } from 'child_process';
 import fs from 'fs';
 import axios from 'axios';
 
+export class Annotate {
+    geometry: string;
+    text: string;
+
+    constructor(text: string, geometry: string = '0') {
+        this.geometry = geometry;
+        this.text = text;
+    }
+
+    to_array() {
+        return [`"${this.geometry}"`, `"${this.text}"`];
+    }
+}
+
+
 export interface ConvertOptions {
-    /** adaptively blur pixels; decrease effect near edges
+    /** Adaptively blur pixels; decrease effect near edges
      * {@link http://www.imagemagick.org/script/command-line-options.php#adaptive-blur} */
     'adaptive-blur'?: string,
-    /** adaptively resize image with data dependent triangulation.
+    /** Adaptively resize image with data dependent triangulation.
      * {@link http://www.imagemagick.org/script/command-line-options.php#adaptive-resize} */
     'adaptive-resize'?: string,
-    /** adaptively sharpen pixels; increase effect near edges
+    /** Adaptively sharpen pixels; increase effect near edges
      * {@link http://www.imagemagick.org/script/command-line-options.php#adaptive-sharpen} */
     'adaptive-sharpen'?: string,
-    /** join images into a single multi-image file
+    /** Join images into a single multi-image file
      * {@link http://www.imagemagick.org/script/command-line-options.php#adjoin} */
     'adjoin'?: string,
     /** affine transform matrix
@@ -21,22 +36,22 @@ export interface ConvertOptions {
     /** on, activate, off, deactivate, set, opaque, copy", transparent, extract, background, or shape the alpha channel
      * {@link http://www.imagemagick.org/script/command-line-options.php#alpha} */
     'alpha'?: string,
-    /** geometry text     annotate the image with text
+    /** Annotate the image with text
      * {@link http://www.imagemagick.org/script/command-line-options.php#annotate} */
-    'annotate'?: string,
-    /** remove pixel-aliasing
+    'annotate'?: Annotate,
+    /** Remove pixel-aliasing
      * {@link http://www.imagemagick.org/script/command-line-options.php#antialias} */
     'antialias'?: string,
-    /** append an image sequence
+    /** Append an image sequence
      * {@link http://www.imagemagick.org/script/command-line-options.php#append} */
     'append'?: string,
     /** value     decipher image with this password
      * {@link http://www.imagemagick.org/script/command-line-options.php#authenticate} */
     'authenticate'?: string,
-    /** automagically adjust gamma level of image
+    /** Automagically adjust gamma level of image
      * {@link http://www.imagemagick.org/script/command-line-options.php#auto-gamma} */
     'auto-gamma'?: string,
-    /** automagically adjust color levels of image
+    /** Automagically adjust color levels of image
      * {@link http://www.imagemagick.org/script/command-line-options.php#auto-level} */
     'auto-level'?: string,
     /** automagically orient image
@@ -473,7 +488,7 @@ export interface ConvertOptions {
     'ping'?: string,
     /** value    font point size
      * {@link http://www.imagemagick.org/script/command-line-options.php#pointsize} */
-    'pointsize'?: string,
+    'pointsize'?: string | number,
     /** angle     simulate a Polaroid picture
      * {@link http://www.imagemagick.org/script/command-line-options.php#polaroid} */
     'polaroid'?: string,
@@ -635,7 +650,7 @@ export interface ConvertOptions {
     'stroke'?: string,
     /** value  graphic primitive stroke width
      * {@link http://www.imagemagick.org/script/command-line-options.php#strokewidth} */
-    'strokewidth'?: string,
+    'strokewidth'?: string | number,
     /** type   render text with this font stretch
      * {@link http://www.imagemagick.org/script/command-line-options.php#stretch} */
     'stretch'?: string,
@@ -717,7 +732,7 @@ export interface ConvertOptions {
     /** FlashPix viewing transforms
      * {@link http://www.imagemagick.org/script/command-line-options.php#view} */
     'view'?: string,
-    /** geometry  soften the edges of the image in vignette style
+    /** [geometry]  soften the edges of the image in vignette style
      * {@link http://www.imagemagick.org/script/command-line-options.php#vignette} */
     'vignette'?: string,
     /** method   access method for pixels outside the boundaries of the image
@@ -914,9 +929,20 @@ async function convert(data: string | Buffer, args: ConvertOptions = {} as Conve
         if (p.toLowerCase() === 'format') {
             format = args.format || format;
         } else {
+            if(p == 'write') {
+                // @ts-ignore
+                to_file = args[p];
+                continue;
+            } else if(['caption', 'label'].indexOf(p) >= 0) {
+                // @ts-ignore
+                _arguments = [`-${p}`, `"${args[p]}"`, ..._arguments];
+                continue;
+            }
             _arguments.push(`-${p}`);
             // @ts-ignore
-            _arguments.push(args[p]);
+            if (args[p] instanceof Annotate) _arguments.push(...args[p].to_array());
+            // @ts-ignore
+            else _arguments.push(`"${args[p]}"`);
         }
     }
 

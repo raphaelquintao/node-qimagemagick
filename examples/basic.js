@@ -1,6 +1,4 @@
-// import { QIM } from "./lib/esm/index.js";
-
-const QIM = require("./lib");
+const {QIM} = require("./../lib");
 
 
 async function main() {
@@ -22,21 +20,6 @@ async function main() {
 
     let converted_info = await QIM.identify(blob).catch(reason => {console.log(reason)});
     console.log(converted_info);
-    
-    
-    let buffer = await QIM.convert(image, {
-        format: 'png',
-        gravity: 'Center',
-        crop: '300x300+0+0'
-    }).catch(reason => {
-        console.log('error: ', reason);
-        process.exit(1);
-    });
-
-    console.log('Cropped:')
-    
-    let cropped_info = await QIM.identify(blob).catch(reason => {console.log(reason)});
-    console.log(cropped_info);
 }
 
 main();
